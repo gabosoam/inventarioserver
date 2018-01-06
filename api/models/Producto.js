@@ -13,17 +13,25 @@ module.exports = {
 
     codigo : { type: 'string', unique: true },
 
-    nombre : { type: 'string', unique: true },
+    nombre : { type: 'string' },
+
+    unidad : { type: 'string' },
 
     precio : { type: 'float' },
 
+    estado : { type: 'string' },
+
+    categoria : {model: 'categoria'},
+
     stock: {type : 'float'},
+
+    minimo: {type : 'float'},
 
     tipo : { type: 'string', enum: ['unidad', 'granel'] },
 
     marca : {model: 'marca' },
 
-    categoria : {model: 'categoria'},
+    
 
     detalles: {collection: 'detalle', via: 'factura'}
 
