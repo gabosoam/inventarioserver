@@ -20,8 +20,13 @@ module.exports = {
 
   obtenerDetalle(req, res){
     var factura = req.query.factura;
-    Detalle.query('SELECT * FROM vistaDetalle WHERE factura = ?',factura , function(err, rawResult) {
-      return res.json(rawResult);
+    Detalle.query('SELECT * FROM vistadetalle2 WHERE factura = ?',factura , function(err, rawResult) {
+      if (err) {
+        console.log(err)
+      } else {
+        return res.json(rawResult);
+      }
+      
     });
   },
 
