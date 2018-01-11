@@ -46,6 +46,23 @@ module.exports = {
     return res.json({
       todo: 'tipo() is not implemented yet!'
     });
-  }
+  },
+
+  modificarStock(req, res){
+    var id = req.query.id;
+    var stock = req.query.stock;
+    Producto.query('UPDATE producto SET producto.stock=producto.stock+? WHERE producto.id=?',[stock,id ], function(err, rawResult) {
+      if (err) {
+        console.log(err)
+      } else {
+
+        
+
+
+        return res.json(rawResult);
+      }
+      
+    });
+  },
 };
 
