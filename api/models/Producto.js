@@ -8,35 +8,31 @@
 module.exports = {
 
   attributes: {
+    id: { type: 'integer', primaryKey: true, autoIncrement: true },
+    codigo: { type: 'string', unique: true },
+    nombre: { type: 'string' },
+    unidad: { type: 'string' },
+    precio: { type: 'float' },
+    estado: { type: 'string' },
+    categoria: { model: 'categoria' },
+    stock: { type: 'float' },
+    minimo: { type: 'float' },
+    tipo: { type: 'string', enum: ['unidad', 'granel'] },
+    marca: { model: 'marca' },
+    detalles: { collection: 'detalle', via: 'factura' },
+    precios: { collection: 'precio', via: 'producto' }
+  },
 
-    id : { type: 'integer', primaryKey:true, autoIncrement: true },
-
-    codigo : { type: 'string', unique: true },
-
-    nombre : { type: 'string' },
-
-    unidad : { type: 'string' },
-
-    precio : { type: 'float' },
-
-    estado : { type: 'string' },
-
-    categoria : {model: 'categoria'},
-
-    stock: {type : 'float'},
-
-    minimo: {type : 'float'},
-
-    tipo : { type: 'string', enum: ['unidad', 'granel'] },
-
-    marca : {model: 'marca' },
-
-    
-
-    detalles: {collection: 'detalle', via: 'factura'}
-
-    
-
-  }
+  afterCreate: function (values, cb) {
+  
+    Precio.create({
+      producto: values.id,
+      unidad: values.unidad,
+      precio: values.precio,
+      tamano: 1
+    }).exec(function (err, records) {
+      cb();
+    });
+  },
 };
 
