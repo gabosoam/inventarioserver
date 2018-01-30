@@ -11,7 +11,7 @@ module.exports = {
     id: { type: 'integer', primaryKey: true, autoIncrement: true },
     codigo: { type: 'string', unique: true },
     nombre: { type: 'string' },
-    unidad: { model: 'unidad'},
+    unidad: { model: 'unidad' },
     precio: { type: 'float' },
     estado: { type: 'string' },
     categoria: { model: 'categoria' },
@@ -22,16 +22,35 @@ module.exports = {
     precios: { collection: 'precio', via: 'producto' }
   },
 
+  beforeCreate(valores, callback) {
+    valores.nombre = valores.nombre.toUpperCase().trim();
+    callback();
+  },
+
+  beforeUpdate(valores, callback) {
+    if (valores.nombre) {
+      valores.nombre = valores.nombre.toUpperCase().trim();
+      callback();
+    }else{
+      callback();
+    } 
+    
+  },
+
   afterCreate: function (values, cb) {
-  
-    Precio.create({
-      producto: values.id,
-      unidad: values.unidad,
-      precio: values.precio,
-      tamano: 1
-    }).exec(function (err, records) {
-      cb();
-    });
+
+    Unidad.findOne({ id: values.unidad }, function (err, unidad) {
+      Precio.create({
+        producto: values.id,
+        unidad: unidad.nombre,
+        precio: values.precio,
+        tamano: 1
+      }).exec(function (err, records) {
+        cb();
+      });
+    })
+
+
   },
 };
 

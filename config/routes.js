@@ -36,9 +36,12 @@ module.exports.routes = {
     view: 'homepage'
   },
 
+
+
+
   'POST /login': function (req, res) {
     var body = req.body;
-    Usuario.findOne({nombre: body.nombre}).exec(function (err, usuario){
+    Usuario.findOne({ nombre: body.nombre }).exec(function (err, usuario) {
       if (err) {
         return res.serverError(err);
       }
@@ -46,15 +49,30 @@ module.exports.routes = {
         return res.notFound('No existe el usuario');
       }
 
-      if(usuario.contrasena!=body.contrasena){
+      if (usuario.contrasena != body.contrasena) {
         return res.notFound('Contraseña incorrecta');
       }
-    
-      req.session.me= usuario.id;
-      return res.ok({id:usuario});
+
+      req.session.me = usuario.id;
+      return res.ok({ id: usuario });
     });
 
-   
+
+  },
+
+
+  '/lista': function (req, res) {
+    var codigo = req.query.codigo;
+
+    Producto.query('SELECT * FROM lista where codigo=?', codigo, function (error, data) {
+      if (error) {
+        return res.notFound('Producto no encontrado');
+      } else {
+        return res.ok(data);
+      }
+    })
+    
+
   },
 
   /***************************************************************************

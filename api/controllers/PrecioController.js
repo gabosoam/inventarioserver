@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	
+
 
 
   /**
@@ -16,6 +16,10 @@ module.exports = {
     return res.json({
       todo: 'id() is not implemented yet!'
     });
+  },
+
+  obtenerprecio: function (req, res) {
+      
   }
 };
 

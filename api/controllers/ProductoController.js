@@ -49,6 +49,8 @@ module.exports = {
   },
 
   modificarStock(req, res){
+
+    console.log('hola');
     var id = req.query.id;
     var stock = req.query.stock;
     Producto.query('UPDATE producto SET producto.stock=producto.stock+? WHERE producto.id=?',[stock,id ], function(err, rawResult) {
@@ -56,7 +58,7 @@ module.exports = {
         console.log(err)
       } else {
 
-        
+        console.log(rawResult)
 
 
         return res.json(rawResult);
