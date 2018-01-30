@@ -45,7 +45,7 @@ module.exports.connections = {
     host: 'localhost',
     user: 'root', //optional
     password: '12345', //optional
-    database: 'inventario' //optional
+    database: 'inventarioheras' //optional
   },
 
   mysql2: {
